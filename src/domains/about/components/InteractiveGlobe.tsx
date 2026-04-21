@@ -2,29 +2,35 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import type { GlobeMethods } from "react-globe.gl";
 
 const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
 export function InteractiveGlobe() {
-    const globeRef = useRef<any>(null);
+    const globeRef = useRef<GlobeMethods | undefined>(undefined);
     const [mounted, setMounted] = useState(false);
 
     // Dynamic width based on window to make it a huge background object
     const [dimensions, setDimensions] = useState({ width: 800, height: 800 });
 
     useEffect(() => {
-        setMounted(true);
         if (typeof window !== "undefined") {
             // Set size dynamically depending on the screen size
-            const size = Math.min(window.innerWidth, window.innerHeight) * 1.1;
-            setDimensions({ width: size, height: size });
-
             const handleResize = () => {
                 const newSize = Math.min(window.innerWidth, window.innerHeight) * 1.1;
                 setDimensions({ width: newSize, height: newSize });
             };
+
+            const mountTimer = window.setTimeout(() => {
+                setMounted(true);
+                handleResize();
+            }, 0);
+
             window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
+            return () => {
+                window.clearTimeout(mountTimer);
+                window.removeEventListener('resize', handleResize);
+            };
         }
     }, []);
 
