@@ -64,12 +64,16 @@ export function BlogFeed() {
         });
     };
 
-    const content = loading ? (
-        <div className="w-full text-center text-slate-500 font-mono py-10 animate-pulse">
-            Fetching latest logs...
-        </div>
-    ) : posts.length > 0 ? (
-        posts.map((post, index) => (
+    let content: React.ReactNode;
+
+    if (loading) {
+        content = (
+            <div className="w-full text-center text-slate-500 font-mono py-10 animate-pulse">
+                Fetching latest logs...
+            </div>
+        );
+    } else if (posts.length > 0) {
+        content = posts.map((post, index) => (
             <motion.a
                 key={post.link}
                 href={post.link}
@@ -91,10 +95,10 @@ export function BlogFeed() {
                 </h3>
                 <p className="text-slate-400 text-sm leading-relaxed">{stripHtml(post.description)}</p>
             </motion.a>
-        ))
-    ) : (
-        <div className="w-full text-center text-slate-500 font-mono py-10">No logs found.</div>
-    );
+        ));
+    } else {
+        content = <div className="w-full text-center text-slate-500 font-mono py-10">No logs found.</div>;
+    }
 
     return (
         <section id="blog" className="py-24 px-6 md:px-20 bg-black relative min-h-[80vh]">
