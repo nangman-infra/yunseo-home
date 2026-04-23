@@ -3,6 +3,12 @@
 import { useEffect, useRef } from "react";
 
 // Inject keyframe styles exactly once
+function randomFloat() {
+    const values = new Uint32Array(1);
+    globalThis.crypto.getRandomValues(values);
+    return values[0] / (0xffffffff + 1);
+}
+
 function injectStyles() {
     if (document.getElementById("starfield-styles")) return;
     const style = document.createElement("style");
@@ -48,14 +54,14 @@ export function StarField() {
             const el = document.createElement("div");
             el.className = "star-dot";
 
-            const size = Math.random() * 2.2 + 0.5;
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            const dur = (Math.random() * 5 + 6).toFixed(2) + "s";  // 6s ~ 11s (slow)
-            const delay = (Math.random() * 10).toFixed(2) + "s";    // spread over 10s
+            const size = randomFloat() * 2.2 + 0.5;
+            const x = randomFloat() * 100;
+            const y = randomFloat() * 100;
+            const dur = (randomFloat() * 5 + 6).toFixed(2) + "s";  // 6s ~ 11s (slow)
+            const delay = (randomFloat() * 10).toFixed(2) + "s";    // spread over 10s
 
             // Color: mostly white, some faint blue/cyan
-            const hue = Math.random() < 0.25 ? `190, 220, 255` : `255, 255, 255`;
+            const hue = randomFloat() < 0.25 ? `190, 220, 255` : `255, 255, 255`;
             const glowSize = (size * 3).toFixed(1);
             const glowSize2 = (size * 6).toFixed(1);
 
@@ -79,12 +85,12 @@ export function StarField() {
             const el = document.createElement("div");
             el.className = "star-4pt";
 
-            const size = Math.random() * 6 + 4; // 4px ~ 10px
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            const dur = (Math.random() * 5 + 7).toFixed(2) + "s";  // 7s ~ 12s (very slow)
-            const delay = (Math.random() * 10).toFixed(2) + "s";
-            const hue = Math.random() < 0.3 ? `190, 230, 255` : `255, 255, 255`;
+            const size = randomFloat() * 6 + 4; // 4px ~ 10px
+            const x = randomFloat() * 100;
+            const y = randomFloat() * 100;
+            const dur = (randomFloat() * 5 + 7).toFixed(2) + "s";  // 7s ~ 12s (very slow)
+            const delay = (randomFloat() * 10).toFixed(2) + "s";
+            const hue = randomFloat() < 0.3 ? `190, 230, 255` : `255, 255, 255`;
 
             el.style.cssText = `
                 left: ${x}%;
@@ -103,7 +109,7 @@ export function StarField() {
 
         return () => {
             while (container.firstChild) {
-                container.removeChild(container.firstChild);
+                container.firstChild.remove();
             }
         };
     }, []);

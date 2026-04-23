@@ -51,7 +51,7 @@ export function BlogFeed() {
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = htmlContent;
         let text = tempDiv.textContent || tempDiv.innerText || "";
-        text = text.replace(/\s+/g, " ").trim();
+        text = text.replaceAll(/\s+/g, " ").trim();
         return text.length > 110 ? text.substring(0, 110) + "..." : text;
     };
 
@@ -63,6 +63,38 @@ export function BlogFeed() {
             day: "numeric",
         });
     };
+
+    const content = loading ? (
+        <div className="w-full text-center text-slate-500 font-mono py-10 animate-pulse">
+            Fetching latest logs...
+        </div>
+    ) : posts.length > 0 ? (
+        posts.map((post, index) => (
+            <motion.a
+                key={post.link}
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index * 0.12 }}
+                whileHover={{ x: 8 }}
+                className="group block bg-slate-900/40 border border-slate-800 hover:border-blue-500/50 p-6 rounded-2xl w-full transition-all backdrop-blur-md"
+            >
+                <div className="text-xs text-blue-400/80 mb-2 font-mono tracking-widest">
+                    {formatDate(post.pubDate)}
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition-colors flex items-center gap-2">
+                    {post.title}
+                    <ArrowRight className="w-5 h-5 text-transparent -translate-x-2 group-hover:text-amber-300 group-hover:translate-x-0 transition-all shrink-0" />
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{stripHtml(post.description)}</p>
+            </motion.a>
+        ))
+    ) : (
+        <div className="w-full text-center text-slate-500 font-mono py-10">No logs found.</div>
+    );
 
     return (
         <section id="blog" className="py-24 px-6 md:px-20 bg-black relative min-h-[80vh]">
@@ -78,37 +110,7 @@ export function BlogFeed() {
                 </motion.div>
 
                 <div className="space-y-4 flex flex-col items-start">
-                    {loading ? (
-                        <div className="w-full text-center text-slate-500 font-mono py-10 animate-pulse">
-                            Fetching latest logs...
-                        </div>
-                    ) : posts.length > 0 ? (
-                        posts.map((post, index) => (
-                            <motion.a
-                                key={index}
-                                href={post.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-50px" }}
-                                transition={{ duration: 0.5, delay: index * 0.12 }}
-                                whileHover={{ x: 8 }}
-                                className="group block bg-slate-900/40 border border-slate-800 hover:border-blue-500/50 p-6 rounded-2xl w-full transition-all backdrop-blur-md"
-                            >
-                                <div className="text-xs text-blue-400/80 mb-2 font-mono tracking-widest">
-                                    {formatDate(post.pubDate)}
-                                </div>
-                                <h3 className="text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition-colors flex items-center gap-2">
-                                    {post.title}
-                                    <ArrowRight className="w-5 h-5 text-transparent -translate-x-2 group-hover:text-amber-300 group-hover:translate-x-0 transition-all shrink-0" />
-                                </h3>
-                                <p className="text-slate-400 text-sm leading-relaxed">{stripHtml(post.description)}</p>
-                            </motion.a>
-                        ))
-                    ) : (
-                        <div className="w-full text-center text-slate-500 font-mono py-10">No logs found.</div>
-                    )}
+                    {content}
                 </div>
             </div>
 

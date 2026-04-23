@@ -70,7 +70,7 @@ const PROJECTS = [
 ];
 
 // 모든 수상 배지 동일 스타일
-function AwardBadge({ award }: { award: string }) {
+function AwardBadge({ award }: Readonly<{ award: string }>) {
     return (
         <span className="absolute top-4 right-4 text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 font-mono">
             {award}

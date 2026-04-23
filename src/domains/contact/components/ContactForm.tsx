@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Mail, Github, Linkedin, School } from "lucide-react";
+import { MapPin, Mail, GithubIcon, LinkedinIcon, School } from "lucide-react";
 
 export function ContactForm() {
     return (
@@ -35,11 +35,11 @@ export function ContactForm() {
                 >
                     <a href="https://github.com/yxxunseo" target="_blank" rel="noopener noreferrer"
                         className="p-3 group relative rounded-full hover:bg-slate-800 transition-all duration-300" aria-label="GitHub">
-                        <Github className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                        <GithubIcon className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
                     </a>
                     <a href="https://www.linkedin.com/in/%EC%9C%A4%EC%84%9C-%EA%B0%95-0006253a9/" target="_blank" rel="noopener noreferrer"
                         className="p-3 group relative rounded-full hover:bg-slate-800 transition-all duration-300" aria-label="LinkedIn">
-                        <Linkedin className="w-5 h-5 text-slate-400 group-hover:text-[#0A66C2] transition-colors" />
+                        <LinkedinIcon className="w-5 h-5 text-slate-400 group-hover:text-[#0A66C2] transition-colors" />
                     </a>
                     <a href="mailto:osope@naver.com"
                         className="p-3 group relative rounded-full hover:bg-slate-800 transition-all duration-300" aria-label="Email">

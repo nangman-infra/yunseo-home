@@ -127,9 +127,9 @@ export function ExperienceTimeline() {
                         <Award className="w-5 h-5 text-slate-400" /> Certifications
                     </h3>
                     <div className="grid md:grid-cols-2 gap-4">
-                        {CERTIFICATIONS.map((cert, i) => (
+                        {CERTIFICATIONS.map((cert) => (
                             <div
-                                key={i}
+                                key={`${cert.org}-${cert.title}-${cert.date}`}
                                 className="p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-600 transition-colors"
                             >
                                 <div className="text-xs font-mono text-slate-500 mb-1">{cert.date}</div>

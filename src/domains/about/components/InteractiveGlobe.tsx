@@ -14,22 +14,22 @@ export function InteractiveGlobe() {
     const [dimensions, setDimensions] = useState({ width: 800, height: 800 });
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
+        if (typeof globalThis.window !== "undefined") {
             // Set size dynamically depending on the screen size
             const handleResize = () => {
-                const newSize = Math.min(window.innerWidth, window.innerHeight) * 1.1;
+                const newSize = Math.min(globalThis.window.innerWidth, globalThis.window.innerHeight) * 1.1;
                 setDimensions({ width: newSize, height: newSize });
             };
 
-            const mountTimer = window.setTimeout(() => {
+            const mountTimer = globalThis.setTimeout(() => {
                 setMounted(true);
                 handleResize();
             }, 0);
 
-            window.addEventListener('resize', handleResize);
+            globalThis.addEventListener('resize', handleResize);
             return () => {
-                window.clearTimeout(mountTimer);
-                window.removeEventListener('resize', handleResize);
+                globalThis.clearTimeout(mountTimer);
+                globalThis.removeEventListener('resize', handleResize);
             };
         }
     }, []);
