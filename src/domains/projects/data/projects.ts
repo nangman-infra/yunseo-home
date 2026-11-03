@@ -26,6 +26,14 @@ export const PROJECTS: Project[] = [
         stack: ["React", "FastAPI", "Docker", "Vercel", "Render"],
     },
     {
+        title: "NCP–GCP 멀티클라우드 재해복구(DR)",
+        period: "2026.01",
+        description: "NCP를 Active, GCP를 Warm Standby로 두고 장애 시 Cloudflare DNS로 트래픽을 넘기는 멀티클라우드 DR 팀 프로젝트",
+        org: "네이버클라우드 NCP 특강 (5인 팀)",
+        role: "팀원이 맡긴 GCP Standby 리소스를 찾아보고 적용하며 멀티클라우드 DR 구조 학습",
+        stack: ["NCP", "GCP", "Terraform", "Kubernetes"],
+    },
+    {
         title: "온결",
         period: "2025.04 ~ 2025.12",
         description: "구청 담당자가 분기마다 수작업으로 하던 주민 조회 · 세대원 집계 · 엑셀 작성을 자동화한 리빙랩 프로젝트",

@@ -15,8 +15,14 @@ describe("yunseo project display", () => {
   it("links featured case studies to their detail pages", () => {
     render(<ProjectDisplay />);
 
-    const link = screen.getByRole("link", { name: /멀티클라우드 재해복구/ });
-    expect(link).toHaveAttribute("href", "/projects/multicloud-dr");
+    expect(screen.getByRole("link", { name: /방명록/ })).toHaveAttribute("href", "/projects/ncp-guestbook-3tier");
     expect(screen.getByRole("link", { name: /지질공원/ })).toHaveAttribute("href", "/projects/geopark-architecture");
+  });
+
+  it("lists the DR project under other projects without a detail link", () => {
+    render(<ProjectDisplay />);
+
+    expect(screen.getByText("NCP–GCP 멀티클라우드 재해복구(DR)")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /멀티클라우드 재해복구/ })).not.toBeInTheDocument();
   });
 });

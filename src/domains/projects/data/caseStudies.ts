@@ -141,62 +141,6 @@ export const CASE_STUDIES: CaseStudy[] = [
             },
         ],
     },
-    {
-        slug: "multicloud-dr",
-        title: "NCP–GCP 멀티클라우드 재해복구(DR)",
-        subtitle: "처음 해본 클라우드 팀 프로젝트 — 한 클라우드가 멈추면 다른 클라우드가 이어받는 Active / Warm Standby 구조",
-        period: "2026.01",
-        org: "네이버클라우드 NCP 특강 Team9",
-        team: "5명",
-        role: ["팀 설계를 따라가며 GCP Standby 환경(VPC, GKE) 구성 담당"],
-        highlights: ["첫 클라우드 프로젝트", "NCP Active · GCP Standby", "Terraform"],
-        stack: [
-            { label: "Cloud", items: ["NCP (VPC, NKS, Load Balancer)", "GCP (VPC, GKE, Compute Engine, IAP, GCS)", "Cloudflare DNS · Global LB"] },
-            { label: "IaC · CI/CD", items: ["Terraform", "GitHub Actions", "Docker", "Helm", "Argo Rollouts"] },
-            { label: "Monitoring", items: ["Prometheus", "Grafana"] },
-        ],
-        sections: [
-            {
-                title: "팀이 만든 전체 구조",
-                diagrams: [
-                    {
-                        src: "/projects/dr-overall.png",
-                        alt: "NCP Active 클러스터와 GCP Standby 클러스터를 Cloudflare DNS가 연결하는 멀티클라우드 DR 아키텍처",
-                        caption: "Cloudflare가 평소에는 NCP로, 장애 시에는 GCP로 HTTP 트래픽을 보낸다",
-                        width: 2400,
-                        height: 1399,
-                    },
-                ],
-                items: [
-                    "NCA 특강에서 최우수 수료생으로 선발되어 이어서 들은 NCP 특강에서 5명이 팀으로 진행한 프로젝트다.",
-                    "평소 트래픽은 Cloudflare DNS + Global LB를 거쳐 NCP NKS 클러스터(Active)로 들어가고, NCP 장애 시 GCP GKE 클러스터(Warm Standby)로 넘어간다.",
-                    "Standby로 한 번에 모든 트래픽을 넘기면 과부하가 올 수 있어, 팀은 DNS 가중치를 단계적으로 올리는 전환 방식을 채택했다.",
-                ],
-            },
-            {
-                title: "내가 맡은 부분: GCP Standby",
-                diagrams: [
-                    {
-                        src: "/projects/dr-gcp-standby.png",
-                        alt: "GCP Standby 환경: VPC, Bastion, GKE 노드풀(argo-rollouts, monitoring, app 네임스페이스), IAP, ALB, GCS 상태 버킷",
-                        caption: "GCP Standby — VPC 안의 GKE 클러스터, IAP를 거친 Bastion 접근",
-                        width: 1914,
-                        height: 2400,
-                    },
-                ],
-                items: [
-                    "GCP 쪽 VPC와 GKE 클러스터를 구성하고, app · monitoring · argo-rollouts 네임스페이스에 서비스가 올라가도록 맞췄다.",
-                    "운영자 접근은 IAP를 거쳐 Bastion으로 들어가는 구조다.",
-                ],
-            },
-            {
-                title: "결과",
-                items: [
-                    "이 프로젝트에서 처음 접한 VPC · 로드밸런서 · IaC 개념을 이후 인턴십 과제에서 직접 설계하고 Terraform으로 구축하는 데 썼다.",
-                ],
-            },
-        ],
-    },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
