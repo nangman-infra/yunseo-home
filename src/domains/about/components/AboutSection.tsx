@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { BadgeCheck, Briefcase, FlaskConical, GraduationCap } from "lucide-react";
 
 import { AwardBadge } from "@/domains/projects/components/AwardBadge";
@@ -48,6 +48,19 @@ const AWARDS = [
     { date: "2025.05", title: "2025 SW/AI 경진대회", award: "우수상" },
 ];
 
+// 항목이 하나씩 흩뿌려지듯 나타나게
+const scatter: Variants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.07 } },
+};
+
+const speck: Variants = {
+    hidden: { opacity: 0, y: 14, filter: "blur(4px)" },
+    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+const inView = { initial: "hidden", whileInView: "show", viewport: { once: true, margin: "-60px" } } as const;
+
 export function AboutSection() {
     return (
         <section id="about" className="py-24 px-6 md:px-20 bg-[#0A0A0A] border-t border-slate-800">
@@ -62,96 +75,66 @@ export function AboutSection() {
                     <h2 className="text-3xl font-bold tracking-[0.2em] uppercase">About</h2>
                 </motion.div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.7 }}
-                    className="mb-10"
-                >
-                    <p className="text-sm font-mono uppercase tracking-widest text-slate-400 mb-3">
+                <motion.div {...inView} variants={scatter} className="mb-16">
+                    <motion.p variants={speck} className="text-sm font-mono uppercase tracking-widest text-slate-400 mb-3">
                         Cloud · Infra Engineer
-                    </p>
-                    <p className="text-4xl md:text-5xl font-bold text-white mb-5">강윤서</p>
-                    <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl break-keep">
+                    </motion.p>
+                    <motion.p variants={speck} className="text-4xl md:text-5xl font-bold text-white mb-5">
+                        강윤서
+                    </motion.p>
+                    <motion.p variants={speck} className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl break-keep">
                         장애 상황까지 설계에 담아, 멈추지 않는 인프라를 만듭니다.
-                    </p>
+                    </motion.p>
                 </motion.div>
 
-                <motion.ul
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.6 }}
-                    className="grid sm:grid-cols-2 gap-4 mb-6"
-                >
+                <motion.ul {...inView} variants={scatter} className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 mb-20">
                     {PROFILE.map(({ icon: Icon, period, title, desc }) => (
-                        <li
-                            key={title}
-                            className="flex items-start gap-4 p-5 rounded-2xl bg-[#1c1c1e] border border-[#2a2a2a]"
-                        >
-                            <span className="shrink-0 flex items-center justify-center w-11 h-11 rounded-xl bg-slate-800 text-slate-200">
-                                <Icon className="w-5 h-5" aria-hidden />
-                            </span>
-                            <div className="min-w-0">
-                                <div className="text-xs font-mono text-slate-400 mb-1">{period}</div>
-                                <div className="text-base font-semibold text-white leading-snug">{title}</div>
-                                <div className="text-sm text-slate-400 leading-snug mt-0.5">{desc}</div>
-                            </div>
-                        </li>
+                        <motion.li key={title} variants={speck}>
+                            <Icon className="w-5 h-5 text-slate-500 mb-4" aria-hidden />
+                            <div className="text-xs font-mono text-slate-500 mb-1.5">{period}</div>
+                            <div className="text-base font-semibold text-white leading-snug">{title}</div>
+                            <div className="text-sm text-slate-400 leading-snug mt-1 break-keep">{desc}</div>
+                        </motion.li>
                     ))}
                 </motion.ul>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6 }}
-                        className="p-6 rounded-2xl bg-[#1c1c1e] border border-[#2a2a2a]"
-                    >
-                        <h3 className="text-sm font-mono uppercase tracking-widest text-slate-400 mb-5">Skills</h3>
-                        <dl className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-x-16 gap-y-16">
+                    <div>
+                        <h3 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-6">Skills</h3>
+                        <motion.dl {...inView} variants={scatter} className="space-y-5">
                             {SKILLS.map((group) => (
-                                <div key={group.label}>
-                                    <dt className="text-xs text-slate-400 mb-1.5">{group.label}</dt>
-                                    <dd className="flex flex-wrap gap-1.5">
+                                <motion.div key={group.label} variants={speck}>
+                                    <dt className="text-xs text-slate-500 mb-1.5">{group.label}</dt>
+                                    <dd className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-200">
                                         {group.items.map((item) => (
-                                            <span
-                                                key={item}
-                                                className="text-xs px-2 py-0.5 rounded-md bg-slate-800/80 text-slate-200 border border-slate-700"
-                                            >
-                                                {item}
-                                            </span>
+                                            <span key={item}>{item}</span>
                                         ))}
                                     </dd>
-                                </div>
+                                </motion.div>
                             ))}
-                        </dl>
-                    </motion.div>
+                        </motion.dl>
+                    </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        className="p-6 rounded-2xl bg-[#1c1c1e] border border-[#2a2a2a]"
-                    >
-                        <h3 className="text-sm font-mono uppercase tracking-widest text-slate-400 mb-5">Awards</h3>
-                        <ul className="space-y-4">
+                    <div>
+                        <h3 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-6">Awards</h3>
+                        <motion.ul {...inView} variants={scatter}>
                             {AWARDS.map((item) => (
-                                <li key={`${item.date}-${item.title}`} className="flex items-start justify-between gap-3">
+                                <motion.li
+                                    key={`${item.date}-${item.title}`}
+                                    variants={speck}
+                                    className="flex items-start justify-between gap-3 py-3.5 border-b border-slate-800/70 first:pt-0 last:border-b-0"
+                                >
                                     <div>
-                                        <div className="text-xs font-mono text-slate-400 mb-0.5">{item.date}</div>
-                                        <div className="text-sm text-slate-200 leading-snug">{item.title}</div>
+                                        <div className="text-xs font-mono text-slate-500 mb-0.5">{item.date}</div>
+                                        <div className="text-sm text-slate-200 leading-snug break-keep">{item.title}</div>
                                     </div>
                                     <div className="shrink-0">
                                         <AwardBadge award={item.award} />
                                     </div>
-                                </li>
+                                </motion.li>
                             ))}
-                        </ul>
-                    </motion.div>
+                        </motion.ul>
+                    </div>
                 </div>
             </div>
         </section>
