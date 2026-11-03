@@ -122,7 +122,7 @@ export function AboutSection() {
                                 <motion.li
                                     key={`${item.date}-${item.title}`}
                                     variants={speck}
-                                    className="flex items-start justify-between gap-3 py-3.5 border-b border-slate-800/70 first:pt-0 last:border-b-0"
+                                    className="flex items-end justify-between gap-3 py-3.5 border-b border-slate-800/70 first:pt-0 last:border-b-0"
                                 >
                                     <div>
                                         <div className="text-xs font-mono text-slate-500 mb-0.5">{item.date}</div>
