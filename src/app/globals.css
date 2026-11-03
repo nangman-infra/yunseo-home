@@ -155,3 +155,25 @@
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob { animation: none; }
 }
+
+/* 히어로 지구 뒤의 은은한 빛 */
+@keyframes globe-breathe {
+  0% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.97); }
+  100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.04); }
+}
+
+.globe-glow {
+  background: radial-gradient(
+    closest-side,
+    rgba(125, 211, 252, 0.16),
+    rgba(99, 102, 241, 0.08) 55%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+  filter: blur(28px);
+  animation: globe-breathe 7s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-glow { animation: none; opacity: 0.75; }
+}

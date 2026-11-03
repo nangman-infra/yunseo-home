@@ -51,14 +51,25 @@ export function InteractiveGlobe() {
     }
 
     return (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30 pointer-events-none mix-blend-screen">
-            <Globe
-                ref={globeRef}
-                width={dimensions.width}
-                height={dimensions.height}
-                globeImageUrl={GLOBE_IMAGE_URL}
-                backgroundColor="rgba(0,0,0,0)"
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+            {/* 지구 뒤에서 천천히 숨 쉬듯 번지는 빛 */}
+            <div
+                aria-hidden="true"
+                className="globe-glow absolute top-1/2 left-1/2 rounded-full"
+                style={{ width: dimensions.width * 0.78, height: dimensions.height * 0.78 }}
             />
+            <div className="relative opacity-40 mix-blend-screen">
+                <Globe
+                    ref={globeRef}
+                    width={dimensions.width}
+                    height={dimensions.height}
+                    globeImageUrl={GLOBE_IMAGE_URL}
+                    backgroundColor="rgba(0,0,0,0)"
+                    showAtmosphere
+                    atmosphereColor="#7dd3fc"
+                    atmosphereAltitude={0.22}
+                />
+            </div>
         </div>
     );
 }
