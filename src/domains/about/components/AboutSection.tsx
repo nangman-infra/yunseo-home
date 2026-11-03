@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { BadgeCheck, Briefcase, FlaskConical, GraduationCap } from "lucide-react";
 
+import { inView, scatter, speck } from "@/components/motion/scatter";
 import { AwardBadge } from "@/domains/projects/components/AwardBadge";
 
 const PROFILE = [
@@ -47,19 +48,6 @@ const AWARDS = [
     { date: "2025.08", title: "크래프톤 정글 웹개발 집중캠프", award: "3등" },
     { date: "2025.05", title: "2025 SW/AI 경진대회", award: "우수상" },
 ];
-
-// 항목이 하나씩 흩뿌려지듯 나타나게
-const scatter: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.07 } },
-};
-
-const speck: Variants = {
-    hidden: { opacity: 0, y: 14, filter: "blur(4px)" },
-    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: "easeOut" } },
-};
-
-const inView = { initial: "hidden", whileInView: "show", viewport: { once: true, margin: "-60px" } } as const;
 
 export function AboutSection() {
     return (
