@@ -89,9 +89,9 @@ export function BlogFeed() {
                 <div className="text-xs text-blue-400/80 mb-2 font-mono tracking-widest">
                     {formatDate(post.pubDate)}
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition-colors flex items-center gap-2">
+                <h3 className="text-xl font-bold mb-2 text-slate-100 group-hover:text-white transition-colors flex items-center gap-2">
                     {post.title}
-                    <ArrowRight className="w-5 h-5 text-transparent -translate-x-2 group-hover:text-amber-300 group-hover:translate-x-0 transition-all shrink-0" />
+                    <ArrowRight className="w-5 h-5 text-transparent -translate-x-2 group-hover:text-slate-300 group-hover:translate-x-0 transition-all shrink-0" />
                 </h3>
                 <p className="text-slate-400 text-sm leading-relaxed">{stripHtml(post.description)}</p>
             </motion.a>

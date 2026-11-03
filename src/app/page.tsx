@@ -1,4 +1,5 @@
 import { HeroSection } from "@/domains/about/components/HeroSection";
+import { AboutSection } from "@/domains/about/components/AboutSection";
 import { ProjectDisplay } from "@/domains/projects/components/ProjectDisplay";
 import { ExperienceTimeline } from "@/domains/experience/components/ExperienceTimeline";
 import { BlogFeed } from "@/domains/blog/components/BlogFeed";
@@ -7,8 +8,11 @@ import { ContactForm } from "@/domains/contact/components/ContactForm";
 export default function PortfolioHome() {
   return (
     <main className="bg-[#0A0A0A] text-slate-50 min-h-screen">
-      {/* 1. About - Earth/Space Entrance */}
+      {/* 0. Hero - Earth/Space Entrance */}
       <HeroSection />
+
+      {/* 1. About - 소개 · 스킬 · 수상 */}
+      <AboutSection />
 
       {/* 2. Projects - Flight/Travel Concept */}
       <ProjectDisplay />

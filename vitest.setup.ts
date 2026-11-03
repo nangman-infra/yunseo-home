@@ -1,6 +1,12 @@
 import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
 import React from "react";
-import { vi } from "vitest";
+import { afterEach, vi } from "vitest";
+
+// globals 비활성화 상태라 RTL 자동 cleanup이 걸리지 않음
+afterEach(() => {
+  cleanup();
+});
 
 vi.mock("framer-motion", () => {
   const createMotionComponent = (tag: string) => {
@@ -12,6 +18,8 @@ vi.mock("framer-motion", () => {
   };
 
   return {
+    AnimatePresence: ({ children }: { children?: React.ReactNode }) =>
+      React.createElement(React.Fragment, null, children),
     motion: new Proxy(
       {},
       {
@@ -43,4 +51,4 @@ class MockIntersectionObserver {
   }
 }
 
-globalThis.IntersectionObserver = MockIntersectionObserver as typeof IntersectionObserver;
+globalThis.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
