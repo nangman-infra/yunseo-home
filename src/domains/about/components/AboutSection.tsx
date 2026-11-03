@@ -51,7 +51,7 @@ const AWARDS = [
 
 export function AboutSection() {
     return (
-        <section id="about" className="py-24 px-6 md:px-20 bg-[#0A0A0A] border-t border-slate-800">
+        <section id="about" className="py-24 px-6 md:px-20 border-t border-slate-800/60">
             <div className="max-w-4xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}

@@ -8,7 +8,7 @@ import { StarDust } from "@/domains/contact/components/StarDust";
 
 export default function PortfolioHome() {
   return (
-    <main className="bg-[#0A0A0A] text-slate-50 min-h-screen">
+    <main className="text-slate-50 min-h-screen">
       {/* 0. Hero - Earth/Space Entrance */}
       <HeroSection />
 

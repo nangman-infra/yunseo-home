@@ -9,7 +9,7 @@ export function HeroSection() {
     return (
         <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
             {/* Background Gradient */}
-            <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-blue-950 to-black" />
+            <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-blue-950 to-black [mask-image:linear-gradient(to_bottom,black_75%,transparent)]" />
 
             {/* Twinkling Star Field */}
             <StarField />

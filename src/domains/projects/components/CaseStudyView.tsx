@@ -21,7 +21,7 @@ export function CaseStudyView({ study }: Readonly<{ study: CaseStudy }>) {
     const meta = [study.period, study.org, study.team].filter(Boolean).join(" · ");
 
     return (
-        <article className="pt-28 pb-24 px-6 md:px-20 bg-[#0A0A0A] min-h-screen">
+        <article className="pt-28 pb-24 px-6 md:px-20 min-h-screen">
             <div className="max-w-4xl mx-auto">
                 <Link
                     href="/#projects"

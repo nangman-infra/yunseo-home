@@ -101,7 +101,7 @@ export function BlogFeed() {
     }
 
     return (
-        <section id="blog" className="py-24 px-6 md:px-20 bg-black relative min-h-[80vh]">
+        <section id="blog" className="py-24 px-6 md:px-20 relative min-h-[80vh]">
             <div className="max-w-4xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}

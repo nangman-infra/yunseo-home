@@ -92,7 +92,7 @@ export function ProjectDisplay() {
     return (
         <section
             id="projects"
-            className="py-24 px-6 md:px-20 bg-[#0A0A0A] relative min-h-screen border-t border-slate-800"
+            className="py-24 px-6 md:px-20 relative min-h-screen border-t border-slate-800/60"
         >
             <div className="max-w-4xl mx-auto">
                 <motion.div

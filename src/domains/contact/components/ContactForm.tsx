@@ -21,7 +21,7 @@ function LinkedInBrandIcon({ className }: Readonly<{ className?: string }>) {
 
 export function ContactForm() {
     return (
-        <section id="contact" className="relative pt-24 pb-8 px-6 md:px-20 bg-black flex flex-col items-center">
+        <section id="contact" className="relative pt-24 pb-8 px-6 md:px-20 flex flex-col items-center">
             <div className="relative max-w-5xl w-full flex flex-col md:flex-row justify-between items-center gap-8">
 
                 {/* Left side: Branding / Location */}
