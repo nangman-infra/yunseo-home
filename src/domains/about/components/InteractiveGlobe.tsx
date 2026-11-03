@@ -58,7 +58,7 @@ export function InteractiveGlobe() {
                 className="globe-glow absolute top-1/2 left-1/2 rounded-full"
                 style={{ width: dimensions.width * 0.78, height: dimensions.height * 0.78 }}
             />
-            <div className="relative opacity-40 mix-blend-screen">
+            <div className="relative opacity-[0.18] mix-blend-screen [mask-image:radial-gradient(closest-side,black_55%,transparent)]">
                 <Globe
                     ref={globeRef}
                     width={dimensions.width}
