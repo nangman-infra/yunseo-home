@@ -8,6 +8,15 @@ import { inView, scatter, speck } from "@/components/motion/scatter";
 import { DiagramFigure } from "@/domains/projects/components/DiagramFigure";
 import type { CaseStudy } from "@/domains/projects/data/caseStudies";
 
+function SectionTitle({ index, title }: Readonly<{ index: number; title: string }>) {
+    return (
+        <div className="flex items-baseline gap-4 mb-6">
+            <span className="text-sm font-mono text-slate-600">{String(index + 1).padStart(2, "0")}</span>
+            <h2 className="text-2xl font-bold break-keep">{title}</h2>
+        </div>
+    );
+}
+
 export function CaseStudyView({ study }: Readonly<{ study: CaseStudy }>) {
     const meta = [study.period, study.org, study.team].filter(Boolean).join(" · ");
 
@@ -47,49 +56,44 @@ export function CaseStudyView({ study }: Readonly<{ study: CaseStudy }>) {
                     ))}
                 </motion.ul>
 
-                {/* 역할 · 스택 */}
-                <div className="grid md:grid-cols-2 gap-x-16 gap-y-12 mb-20">
+                {/* 스택 */}
+                <section className="mb-20">
+                    <h2 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-5">Stack</h2>
+                    <motion.dl {...inView} variants={scatter} className="grid md:grid-cols-3 gap-x-10 gap-y-4">
+                        {study.stack.map((group) => (
+                            <motion.div key={group.label} variants={speck}>
+                                <dt className="text-xs text-slate-500 mb-1.5">{group.label}</dt>
+                                <dd className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-200">
+                                    {group.items.map((item) => (
+                                        <span key={item}>{item}</span>
+                                    ))}
+                                </dd>
+                            </motion.div>
+                        ))}
+                    </motion.dl>
+                </section>
+
+                {/* 본문 섹션 */}
+                <div className="space-y-20">
                     <section>
-                        <h2 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-5">My Role</h2>
-                        <motion.ul {...inView} variants={scatter} className="space-y-3">
-                            {study.role.map((item) => (
-                                <motion.li
-                                    key={item}
+                        <SectionTitle index={0} title="내 역할" />
+                        <motion.dl {...inView} variants={scatter} className="space-y-6">
+                            {study.role.map(({ label, detail }) => (
+                                <motion.div
+                                    key={label}
                                     variants={speck}
-                                    className="text-slate-200 leading-relaxed pl-3 border-l-2 border-slate-700 break-keep"
+                                    className="grid md:grid-cols-[10rem_1fr] gap-x-6 gap-y-1 pl-4 border-l-2 border-slate-700"
                                 >
-                                    {item}
-                                </motion.li>
-                            ))}
-                        </motion.ul>
-                    </section>
-                    <section>
-                        <h2 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-5">Stack</h2>
-                        <motion.dl {...inView} variants={scatter} className="space-y-4">
-                            {study.stack.map((group) => (
-                                <motion.div key={group.label} variants={speck}>
-                                    <dt className="text-xs text-slate-500 mb-1.5">{group.label}</dt>
-                                    <dd className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-200">
-                                        {group.items.map((item) => (
-                                            <span key={item}>{item}</span>
-                                        ))}
-                                    </dd>
+                                    <dt className="font-semibold text-white break-keep">{label}</dt>
+                                    <dd className="text-slate-300 leading-relaxed break-keep">{detail}</dd>
                                 </motion.div>
                             ))}
                         </motion.dl>
                     </section>
-                </div>
 
-                {/* 본문 섹션 */}
-                <div className="space-y-20">
                     {study.sections.map((section, index) => (
                         <section key={section.title}>
-                            <div className="flex items-baseline gap-4 mb-6">
-                                <span className="text-sm font-mono text-slate-600">
-                                    {String(index + 1).padStart(2, "0")}
-                                </span>
-                                <h2 className="text-2xl font-bold break-keep">{section.title}</h2>
-                            </div>
+                            <SectionTitle index={index + 1} title={section.title} />
                             {section.diagrams?.map((diagram) => (
                                 <DiagramFigure key={diagram.src} diagram={diagram} />
                             ))}

@@ -10,9 +10,14 @@ describe("case study view", () => {
     render(<CaseStudyView study={study} />);
 
     expect(screen.getByRole("heading", { level: 1, name: study.title })).toBeInTheDocument();
-    expect(screen.getByText(study.role[0])).toBeInTheDocument();
+    expect(screen.getByText(study.role[0].label)).toBeInTheDocument();
+    expect(screen.getByText(study.role[0].detail)).toBeInTheDocument();
     expect(screen.getByText("Terraform")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "장애 시나리오 검증" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "내 역할" }).previousSibling).toHaveTextContent("01");
+    expect(screen.getByRole("heading", { name: "장애 시나리오 검증" }).previousSibling).toHaveTextContent(
+      String(study.sections.length + 1).padStart(2, "0"),
+    );
   });
 
   it("opens and closes a diagram in a zoom dialog", () => {

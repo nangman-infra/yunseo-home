@@ -44,7 +44,7 @@ function FeaturedItem({ study, index }: Readonly<{ study: CaseStudy; index: numb
                     </h3>
                     <p className="text-slate-300 text-sm leading-relaxed mb-4 break-keep">{study.subtitle}</p>
                     <p className="text-sm text-slate-400 leading-relaxed mb-5 pl-3 border-l-2 border-slate-700 break-keep">
-                        {study.role[0]}
+                        {study.roleSummary}
                     </p>
                     <p className="text-xs font-mono text-slate-500 mb-5">{study.highlights.join("  ·  ")}</p>
                     <span className="inline-flex items-center gap-1 text-sm text-slate-300 group-hover:text-white transition-colors">
