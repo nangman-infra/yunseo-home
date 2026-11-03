@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 export type Dust = {
     x: number;
     y: number;
-    vx: number;
     vy: number;
     tail: number;
     width: number;
@@ -31,14 +30,24 @@ function between(random: Random, min: number, max: number) {
 
 const HUES = ["255, 255, 255", "190, 220, 255", "255, 236, 200"];
 
-// 바닥에서 태어나 위로 떠오르는 입자 하나. 페이드 인/아웃 시간을 입자마다 다르게 준다.
+// 가운데 콘텐츠(max-w-5xl) 바깥의 좌우 여백 폭
+const CONTENT_WIDTH = 1024;
+const MIN_GUTTER = 24;
+
+export function gutterWidth(width: number) {
+    return Math.max(MIN_GUTTER, (width - CONTENT_WIDTH) / 2 - 16);
+}
+
+// 좌우 여백 바닥에서 태어나 곧게 위로 떠오르는 입자 하나. 페이드 인/아웃 시간을 입자마다 다르게 준다.
 export function createDust(width: number, height: number, random: Random = cryptoRandom): Dust {
+    const gutter = Math.min(gutterWidth(width), width / 2);
+    const onLeft = random() < 0.5;
+    const offset = random() * gutter;
     const vy = between(random, 30, 110);
     const life = between(random, 0.45, 0.95) * (height / vy);
     return {
-        x: random() * width,
+        x: onLeft ? offset : width - offset,
         y: height + between(random, 0, 40),
-        vx: between(random, -8, 8),
         vy,
         tail: between(random, 18, 80),
         width: between(random, 0.6, 1.8),
@@ -60,7 +69,6 @@ export function dustAlpha(dust: Dust) {
 
 export function stepDust(dust: Dust, dt: number) {
     dust.age += dt;
-    dust.x += dust.vx * dt;
     dust.y -= dust.vy * dt;
     return dust.age < dust.life;
 }
@@ -69,11 +77,9 @@ function drawDust(ctx: CanvasRenderingContext2D, dust: Dust) {
     const alpha = dustAlpha(dust);
     if (alpha <= 0) return;
 
-    // 꼬리: 머리(현재 투명도) → 끝(0)으로 그라데이션
-    const length = Math.hypot(dust.vx, dust.vy);
-    const tailX = dust.x - (dust.vx / length) * dust.tail;
-    const tailY = dust.y + (dust.vy / length) * dust.tail;
-    const gradient = ctx.createLinearGradient(dust.x, dust.y, tailX, tailY);
+    // 꼬리: 머리(현재 투명도) → 아래쪽 끝(0)으로 그라데이션
+    const tailY = dust.y + dust.tail;
+    const gradient = ctx.createLinearGradient(dust.x, dust.y, dust.x, tailY);
     gradient.addColorStop(0, `rgba(${dust.hue}, ${alpha})`);
     gradient.addColorStop(1, `rgba(${dust.hue}, 0)`);
 
@@ -82,7 +88,7 @@ function drawDust(ctx: CanvasRenderingContext2D, dust: Dust) {
     ctx.lineCap = "round";
     ctx.beginPath();
     ctx.moveTo(dust.x, dust.y);
-    ctx.lineTo(tailX, tailY);
+    ctx.lineTo(dust.x, tailY);
     ctx.stroke();
 
     ctx.fillStyle = `rgba(${dust.hue}, ${alpha})`;
@@ -123,7 +129,7 @@ export function StarDust() {
             const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
             last = now;
 
-            const target = Math.min(50, Math.round(width / 30));
+            const target = Math.min(40, Math.round((gutterWidth(width) * 2) / 18));
             if (dusts.length < target && cryptoRandom() < 0.35) dusts.push(createDust(width, height));
 
             ctx.clearRect(0, 0, width, height);

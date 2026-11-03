@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { createDust, dustAlpha, stepDust, StarDust } from "@/domains/contact/components/StarDust";
+import { createDust, dustAlpha, gutterWidth, stepDust, StarDust } from "@/domains/contact/components/StarDust";
 
 const sequence = (...values: number[]) => {
   let i = 0;
@@ -13,12 +13,24 @@ describe("star dust particles", () => {
     const dust = createDust(1000, 600, sequence(0.5));
 
     expect(dust.y).toBeGreaterThanOrEqual(600);
-    expect(dust.x).toBe(500);
     expect(dust.vy).toBeGreaterThan(0);
 
+    const startX = dust.x;
     const startY = dust.y;
     expect(stepDust(dust, 0.5)).toBe(true);
     expect(dust.y).toBeLessThan(startY);
+    expect(dust.x).toBe(startX);
+  });
+
+  it("spawns only in the left and right gutters, never over the content", () => {
+    const width = 1500;
+    const gutter = gutterWidth(width);
+    const left = createDust(width, 600, sequence(0.2, 0.9, 0.5));
+    const right = createDust(width, 600, sequence(0.8, 0.9, 0.5));
+
+    expect(left.x).toBeLessThanOrEqual(gutter);
+    expect(right.x).toBeGreaterThanOrEqual(width - gutter);
+    expect(gutterWidth(390)).toBe(24);
   });
 
   it("gives each particle its own fade-in and fade-out timing", () => {
