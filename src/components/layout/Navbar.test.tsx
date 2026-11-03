@@ -63,7 +63,7 @@ describe("navbar active section", () => {
   });
 
   it("highlights projects on a project detail page", () => {
-    pathnameMock.value = "/projects/multicloud-dr";
+    pathnameMock.value = "/projects/geopark-architecture";
 
     render(<Navbar />);
 
