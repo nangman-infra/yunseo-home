@@ -3,8 +3,6 @@
 import { motion } from "framer-motion";
 import { MapPin, Mail, School } from "lucide-react";
 
-import { StarDust } from "@/domains/contact/components/StarDust";
-
 function GitHubBrandIcon({ className }: Readonly<{ className?: string }>) {
     return (
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
@@ -23,8 +21,7 @@ function LinkedInBrandIcon({ className }: Readonly<{ className?: string }>) {
 
 export function ContactForm() {
     return (
-        <section id="contact" className="relative pt-40 pb-8 px-6 md:px-20 bg-black flex flex-col items-center">
-            <StarDust />
+        <section id="contact" className="relative pt-24 pb-8 px-6 md:px-20 bg-black flex flex-col items-center">
             <div className="relative max-w-5xl w-full flex flex-col md:flex-row justify-between items-center gap-8">
 
                 {/* Left side: Branding / Location */}
