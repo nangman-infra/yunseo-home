@@ -1,48 +1,64 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const NAV_ITEMS = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Blog", href: "/#blog" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("about");
+  const [activeSection, setActiveSection] = useState<string>("");
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    // 레이아웃의 Navbar는 페이지를 옮겨도 다시 마운트되지 않으므로 경로가 바뀔 때마다 섹션을 다시 찾는다
+    const sectionIds = NAV_ITEMS.map(({ href }) => href.slice(2));
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -60% 0px", threshold: 0 }
-    );
+    const update = () => {
+      setScrolled(window.scrollY > 20);
 
-    NAV_ITEMS.forEach(({ href }) => {
-      const el = document.getElementById(href.slice(1));
-      if (el) observer.observe(el);
-    });
+      const sections = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter((el): el is HTMLElement => el !== null);
 
-    return () => observer.disconnect();
-  }, []);
+      if (sections.length === 0) {
+        setActiveSection(pathname.startsWith("/projects") ? "projects" : "");
+        return;
+      }
+
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom) {
+        setActiveSection(sections[sections.length - 1].id);
+        return;
+      }
+
+      const line = window.innerHeight * 0.4;
+      let current = "";
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= line) current = section.id;
+      }
+      setActiveSection(current);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   return (
     <>
@@ -66,12 +82,12 @@ export function Navbar() {
         {/* 데스크탑 메뉴 */}
         <ul className="hidden md:flex gap-8 text-sm font-medium">
           {NAV_ITEMS.map(({ label, href }) => {
-            const isActive = activeSection === href.slice(1);
+            const isActive = activeSection === href.slice(2);
             return (
               <li key={href} className="relative">
                 <Link
                   href={href}
-                  className={`transition-colors duration-200 ${isActive ? "text-amber-400" : "text-slate-300 hover:text-amber-400"
+                  className={`transition-colors duration-200 ${isActive ? "text-amber-400" : "text-slate-300 hover:text-white"
                     }`}
                 >
                   {label}
@@ -132,7 +148,7 @@ export function Navbar() {
           >
             <ul className="flex flex-col px-6 py-4 gap-1">
               {NAV_ITEMS.map(({ label, href }, index) => {
-                const isActive = activeSection === href.slice(1);
+                const isActive = activeSection === href.slice(2);
                 return (
                   <motion.li
                     key={href}
@@ -143,7 +159,7 @@ export function Navbar() {
                     <Link
                       href={href}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center gap-3 py-3 text-base font-medium border-b border-white/5 last:border-none transition-colors ${isActive ? "text-amber-400" : "text-slate-300 hover:text-amber-400"
+                      className={`flex items-center gap-3 py-3 text-base font-medium border-b border-white/5 last:border-none transition-colors ${isActive ? "text-amber-400" : "text-slate-300 hover:text-white"
                         }`}
                     >
                       {isActive && (
