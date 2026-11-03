@@ -30,7 +30,7 @@ export const PROJECTS: Project[] = [
         period: "2026.01",
         description: "NCP를 Active, GCP를 Warm Standby로 두고 장애 시 Cloudflare DNS로 트래픽을 넘기는 멀티클라우드 DR 팀 프로젝트",
         org: "네이버클라우드 NCP 특강 (5인 팀)",
-        role: "팀원이 맡긴 GCP Standby 리소스를 찾아보고 적용하며 멀티클라우드 DR 구조 학습",
+        role: "팀원과 함께 GCP Standby 환경을 구성하며 멀티클라우드 DR 구조 학습",
         stack: ["NCP", "GCP", "Terraform", "Kubernetes"],
     },
     {
