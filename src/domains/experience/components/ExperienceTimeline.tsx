@@ -67,7 +67,7 @@ const CERTIFICATIONS = [
 
 export function ExperienceTimeline() {
     return (
-        <section id="experience" className="py-24 px-6 md:px-20 bg-[#0A0A0A] relative border-t border-slate-900 flex flex-col items-center">
+        <section id="experience" className="py-24 px-6 md:px-20 relative border-t border-slate-800/60 flex flex-col items-center">
             <div className="max-w-4xl w-full">
                 {/* 제목 */}
                 <motion.div

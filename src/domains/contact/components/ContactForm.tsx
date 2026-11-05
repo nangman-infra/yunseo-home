@@ -21,8 +21,8 @@ function LinkedInBrandIcon({ className }: Readonly<{ className?: string }>) {
 
 export function ContactForm() {
     return (
-        <section id="contact" className="pt-16 pb-8 px-6 md:px-20 bg-[#0A0A0A] border-t border-slate-900 flex flex-col items-center">
-            <div className="max-w-5xl w-full flex flex-col md:flex-row justify-between items-center gap-8">
+        <section id="contact" className="relative pt-24 pb-8 px-6 md:px-20 flex flex-col items-center">
+            <div className="relative max-w-5xl w-full flex flex-col md:flex-row justify-between items-center gap-8">
 
                 {/* Left side: Branding / Location */}
                 <motion.div
@@ -70,7 +70,7 @@ export function ContactForm() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="w-full max-w-5xl mt-12 pt-6 border-t border-slate-900/50 flex flex-col md:flex-row justify-center items-center gap-4 text-xs text-slate-600 font-mono"
+                className="relative w-full max-w-5xl mt-12 pt-6 border-t border-slate-900/50 flex flex-col md:flex-row justify-center items-center gap-4 text-xs text-slate-600 font-mono"
             >
                 <p>© {new Date().getFullYear()} Yunseo Kang. All rights reserved.</p>
             </motion.div>

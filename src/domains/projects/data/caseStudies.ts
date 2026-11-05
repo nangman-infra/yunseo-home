@@ -17,6 +17,8 @@ export type CaseSection = {
     items: string[];
 };
 
+export type RoleItem = { label: string; detail: string };
+
 export type CaseStudy = {
     slug: string;
     title: string;
@@ -25,7 +27,8 @@ export type CaseStudy = {
     org: string;
     team?: string;
     award?: string;
-    role: string[];
+    roleSummary: string;
+    role: RoleItem[];
     highlights: string[];
     stack: StackGroup[];
     sections: CaseSection[];
@@ -39,7 +42,37 @@ export const CASE_STUDIES: CaseStudy[] = [
         period: "2026.01 ~ 2026.02",
         org: "클라우드스퀘어 인턴십 1차 과제",
         team: "개인 과제",
-        role: ["아키텍처 설계부터 Terraform 코드화, CI/CD, 장애 검증, 발표까지 전 과정"],
+        roleSummary: "아키텍처 설계부터 Terraform 코드화, CI/CD, 장애 검증, 발표까지 전 과정",
+        role: [
+            {
+                label: "아키텍처 설계",
+                detail: "WEB · WAS · DB를 Public / Private Subnet으로 나누고, WEB · WAS를 각 2대로 이중화한 뒤 외부 · 내부 Load Balancer와 Auto Scaling을 붙이는 구조를 설계",
+            },
+            {
+                label: "보안",
+                detail: "DB를 Private Subnet에 격리하고 ACG로 필요한 포트 · 출처만 허용해 외부에서 직접 접근할 수 없게 구성",
+            },
+            {
+                label: "IaC",
+                detail: "VPC, Subnet 6개, NAT, Load Balancer, ACG 등 리소스 42개를 Terraform 코드로 작성",
+            },
+            {
+                label: "CI/CD",
+                detail: "GitHub Actions로 main 브랜치에 push하면 Bastion을 거쳐 Private 서버까지 자동 배포되는 파이프라인 구성",
+            },
+            {
+                label: "성능 측정",
+                detail: "Object Storage 앞에 Global CDN을 적용하고, 동시 50명 · 총 500회 요청으로 전후를 비교해 처리량 +11%, 평균 응답 138 → 124ms 확인",
+            },
+            {
+                label: "모니터링 · 장애 검증",
+                detail: "Grafana · Slack · Email 알림을 연결하고, CPU 100% 부하 · 서버 장애 · 파일 삭제를 직접 일으켜 Auto Scaling, 자동 절체, 백업 복원이 동작하는지 확인",
+            },
+            {
+                label: "발표",
+                detail: "설계 근거, 측정 결과, 장애 검증 과정을 정리해 발표",
+            },
+        ],
         highlights: ["처리량 +11% (Global CDN)", "리소스 42개 Terraform", "서버 1대 장애 무중단"],
         stack: [
             { label: "NCP", items: ["VPC", "Application Load Balancer", "Auto Scaling", "Cloud DB for PostgreSQL", "Object Storage", "Global CDN", "KMS", "NAT Gateway", "ACG"] },
@@ -89,7 +122,29 @@ export const CASE_STUDIES: CaseStudy[] = [
         period: "2026.02",
         org: "클라우드스퀘어 인턴십 2차 과제",
         team: "개인 과제",
-        role: ["과업지시서 요건 분석, 아키텍처 설계, 구축 · 시연"],
+        roleSummary: "과업지시서 요건 분석, 아키텍처 설계, 구축 · 시연",
+        role: [
+            {
+                label: "요구사항 분석",
+                detail: "국립공원공단 과업지시서에서 서버 사양과 보안 · 운영 요건(웹 방화벽, 서버 백신, ACG, SSL VPN, 모니터링, 로그 분석, 계정 관리 · 감시, 리소스 관리)을 뽑아 NCP 서비스에 대응",
+            },
+            {
+                label: "과제용 아키텍처",
+                detail: "WEB을 KR1 · KR2 두 Zone에 이중화하고 WAS · DB를 Private Subnet에 격리, 관리자 접근은 SSL VPN으로 받는 구조를 예산 기준에 맞춰 설계",
+            },
+            {
+                label: "실무용 아키텍처",
+                detail: "같은 요건을 실제 기관에 적용한다고 보고 WAF 서버 계층, 기관용 IPsec VPN, Certificate Manager를 더한 안을 따로 설계",
+            },
+            {
+                label: "운영 구성",
+                detail: "NAS · Object Storage 스토리지와 Cloud Insight · Cloud Log Analytics · Backup · Cloud Activity Tracer · Sub Account · Resource Manager로 운영 · 감사 체계 구성",
+            },
+            {
+                label: "구축 · 시연",
+                detail: "과제용 구성을 직접 구축하고 WEB 서버 1대를 내려 Load Balancer가 남은 서버로 넘기는 것을 시연",
+            },
+        ],
         highlights: ["Multi-Zone 이중화", "보안 · 관리 서비스 요건 반영", "WEB 장애 무중단 시연"],
         stack: [
             { label: "NCP", items: ["VPC", "Application Load Balancer", "NAT Gateway", "SSL VPN", "NAS", "Object Storage", "MySQL"] },

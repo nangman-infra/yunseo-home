@@ -4,10 +4,11 @@ import { ProjectDisplay } from "@/domains/projects/components/ProjectDisplay";
 import { ExperienceTimeline } from "@/domains/experience/components/ExperienceTimeline";
 import { BlogFeed } from "@/domains/blog/components/BlogFeed";
 import { ContactForm } from "@/domains/contact/components/ContactForm";
+import { StarDust } from "@/domains/contact/components/StarDust";
 
 export default function PortfolioHome() {
   return (
-    <main className="bg-[#0A0A0A] text-slate-50 min-h-screen">
+    <main className="text-slate-50 min-h-screen">
       {/* 0. Hero - Earth/Space Entrance */}
       <HeroSection />
 
@@ -25,6 +26,9 @@ export default function PortfolioHome() {
 
       {/* 5. Contact - Space terminal */}
       <ContactForm />
+
+      {/* 푸터에서 About까지 좌우 여백으로 떠오르는 별 */}
+      <StarDust topId="about" />
     </main>
   );
 }

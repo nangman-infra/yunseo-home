@@ -132,3 +132,48 @@
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 }
+
+/* 오로라 배경: 흐릿한 색 번짐이 천천히 떠다닌다 */
+@keyframes aurora-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(6vw, -4vh, 0) scale(1.12) rotate(8deg); }
+  100% { transform: translate3d(-4vw, 5vh, 0) scale(0.95) rotate(-6deg); }
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  mix-blend-mode: screen;
+  animation-name: aurora-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob { animation: none; }
+}
+
+/* 히어로 지구 뒤의 은은한 빛 */
+@keyframes globe-breathe {
+  0% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.97); }
+  100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.04); }
+}
+
+.globe-glow {
+  background: radial-gradient(
+    closest-side,
+    rgba(125, 211, 252, 0.16),
+    rgba(99, 102, 241, 0.08) 55%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+  filter: blur(28px);
+  animation: globe-breathe 7s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-glow { animation: none; opacity: 0.75; }
+}

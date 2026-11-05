@@ -8,59 +8,52 @@ import { ArrowUpRight } from "lucide-react";
 import { CASE_STUDIES, type CaseStudy } from "@/domains/projects/data/caseStudies";
 import { PROJECTS, type Project } from "@/domains/projects/data/projects";
 
-function FeaturedCard({ study, index }: Readonly<{ study: CaseStudy; index: number }>) {
+function FeaturedItem({ study, index }: Readonly<{ study: CaseStudy; index: number }>) {
     const thumbnail = study.sections.flatMap((section) => section.diagrams ?? [])[0];
+    const flipped = index % 2 === 1;
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
+        <motion.li
+            initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7 }}
         >
-            <Link
-                href={`/projects/${study.slug}`}
-                className="group grid md:grid-cols-[2fr_3fr] gap-6 p-5 rounded-2xl bg-[#1c1c1e] border border-[#2a2a2a] hover:border-[#4a4a4a] transition-colors"
-            >
+            <Link href={`/projects/${study.slug}`} className="group grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 {thumbnail && (
-                    <div className="overflow-hidden rounded-xl bg-white border border-slate-800 aspect-[16/10]">
+                    <div className={`overflow-hidden rounded-xl bg-white aspect-[16/10] ${flipped ? "md:order-2" : ""}`}>
                         <Image
                             src={thumbnail.src}
                             alt={thumbnail.alt}
                             width={thumbnail.width}
                             height={thumbnail.height}
                             unoptimized
-                            className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
+                            className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-[1.03] transition duration-500"
                         />
                     </div>
                 )}
-                <div className="flex flex-col">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <span className="text-xs font-mono text-slate-400">{study.period}</span>
-                        <span className="text-xs text-slate-500">· {study.org}</span>
+                <div>
+                    <div className="text-5xl font-bold font-mono text-slate-800 mb-4">
+                        {String(index + 1).padStart(2, "0")}
                     </div>
-                    <h3 className="text-xl font-bold mb-2 flex items-start gap-1 group-hover:text-slate-300 transition-colors">
+                    <div className="text-xs font-mono text-slate-500 mb-2">
+                        {study.period} · {study.org}
+                    </div>
+                    <h3 className="text-2xl font-bold mb-3 break-keep group-hover:text-slate-300 transition-colors">
                         {study.title}
-                        <ArrowUpRight className="w-4 h-4 mt-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </h3>
-                    <p className="text-slate-300 text-sm leading-relaxed mb-3">{study.subtitle}</p>
-                    <p className="text-sm text-slate-300 mb-4">
-                        <span className="text-xs font-mono text-slate-500 mr-2">ROLE</span>
-                        {study.role[0]}
+                    <p className="text-slate-300 text-sm leading-relaxed mb-4 break-keep">{study.subtitle}</p>
+                    <p className="text-sm text-slate-400 leading-relaxed mb-5 pl-3 border-l-2 border-slate-700 break-keep">
+                        {study.roleSummary}
                     </p>
-                    <div className="mt-auto flex flex-wrap gap-1.5">
-                        {study.highlights.map((item) => (
-                            <span
-                                key={item}
-                                className="text-xs px-2 py-0.5 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700"
-                            >
-                                {item}
-                            </span>
-                        ))}
-                    </div>
+                    <p className="text-xs font-mono text-slate-500 mb-5">{study.highlights.join("  ·  ")}</p>
+                    <span className="inline-flex items-center gap-1 text-sm text-slate-300 group-hover:text-white transition-colors">
+                        자세히 보기
+                        <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </span>
                 </div>
             </Link>
-        </motion.div>
+        </motion.li>
     );
 }
 
@@ -99,7 +92,7 @@ export function ProjectDisplay() {
     return (
         <section
             id="projects"
-            className="py-24 px-6 md:px-20 bg-[#0A0A0A] relative min-h-screen border-t border-slate-800"
+            className="py-24 px-6 md:px-20 relative min-h-screen border-t border-slate-800/60"
         >
             <div className="max-w-4xl mx-auto">
                 <motion.div
@@ -112,12 +105,12 @@ export function ProjectDisplay() {
                     <h2 className="text-3xl font-bold tracking-[0.2em] uppercase">Projects</h2>
                 </motion.div>
 
-                <h3 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-6">Featured</h3>
-                <div className="space-y-6 mb-20">
+                <h3 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-10">Featured</h3>
+                <ul className="space-y-24 mb-28">
                     {CASE_STUDIES.map((study, index) => (
-                        <FeaturedCard key={study.slug} study={study} index={index} />
+                        <FeaturedItem key={study.slug} study={study} index={index} />
                     ))}
-                </div>
+                </ul>
 
                 <h3 className="text-sm font-mono uppercase tracking-widest text-slate-500 mb-6">Other Projects</h3>
                 <ul className="border-t border-slate-800">

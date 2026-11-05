@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuroraBackground } from "@/components/layout/AuroraBackground";
 import { Navbar } from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="scroll-smooth">
       <body className="bg-[#0A0A0A] text-slate-50 relative min-h-screen overflow-x-hidden">
+        <AuroraBackground />
         <Navbar />
         {children}
       </body>
